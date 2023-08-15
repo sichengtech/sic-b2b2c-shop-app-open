@@ -1,0 +1,429 @@
+/* 商品详情页富文本样式 */
+	.widget-detail-overview .do-title {
+	    font-weight: 700;
+	    font-size: 22px;
+	    line-height: 22px;
+	    color: #333;
+	    padding: 20px 0 10px
+	}
+	
+	.widget-detail-overview .do-content-separate .do-overview {
+	    width: 560px;
+	    display: inline-block
+	}
+	
+	.widget-detail-overview .do-content-separate .do-performance {
+	    width: 350px;
+	    box-sizing: border-box;
+	    min-height: 100px;
+	    float: right;
+	    vertical-align: top
+	}
+	
+	.widget-detail-overview .do-overview {
+	    border-top: 1px dashed #e6e7eb
+	}
+	
+	.widget-detail-overview .do-entry {
+	    border-bottom: 1px dashed #e6e7eb;
+	    padding: 10px 0 16px;
+	    font-size: 12px
+	}
+	
+	.widget-detail-overview .do-entry .do-entry-list {
+	    margin: 0 -20px;
+	    box-sizing: border-box
+	}
+	
+	.widget-detail-overview .do-overview .do-entry-title {
+	    font-weight: 700;
+	    font-size: 14px;
+	    color: #333;
+	    line-height: 14px;
+	    padding: 8px 0
+	}
+	
+	.widget-detail-overview .do-entry dl {
+	    padding: 0 20px;
+	    box-sizing: border-box
+	}
+	
+	.widget-detail-overview .do-entry-separate dl {
+	    width: 300px;
+	    zoom:1;float: left
+	}
+	
+	.widget-detail-overview .do-entry-list:after,.widget-detail-overview .do-entry dl:after,.widget-detail-overview .do-performance:after {
+	    visibility: hidden;
+	    display: block;
+	    height: 0;
+	    font-size: 0;
+	    content: " ";
+	    clear: both
+	}
+	
+	.widget-detail-overview .do-entry dt {
+	    padding: 4px 0;
+	    color: #666;
+	    width: 102px;
+	    float: left;
+	    overflow: hidden;
+	    white-space: nowrap;
+	    text-overflow: ellipsis
+	}
+	
+	.widget-detail-overview .do-entry-separate dt {
+	    width: 90px
+	}
+	
+	.widget-detail-overview .do-entry dd {
+	    padding: 4px 0;
+	    overflow: hidden;
+	    white-space: nowrap;
+	    text-overflow: ellipsis;
+	    color: #333;
+	    margin: 0
+	}
+	
+	.ui2-table {
+	    width: 100%;
+	    border-collapse: collapse
+	}
+	
+	.ui2-table td,.ui2-table th {
+	    padding: 12px;
+	    text-align: left;
+	    border: 1px solid #c8d2e0
+	}
+	
+	.ui2-table th,.ui2-table th:hover {
+	    background: #dae2ed
+	}
+	
+	.ui2-table-zebra tr:nth-child(2n) {
+	    background: #f5f7fa
+	}
+	
+	.ui2-table-hover tr:hover {
+	    background: #e9eef5
+	}
+	
+	.ui2-table-simple td,.ui2-table-simple th {
+	    border-width: 0 0 1px
+	}
+	
+	.do-content {
+	    overflow: hidden
+	}
+	
+	.detail-product-performance .box-body ul {
+	    list-style: none;
+	    font-size: 16px;
+	    color: #333;
+	    letter-spacing: 0;
+	    line-height: 20px;
+	    padding-left: 22px
+	}
+	
+	.detail-product-performance ul span {
+	    display: inline-block;
+	    width: 100px
+	}
+	
+	.detail-product-performance ul li {
+	    margin: 12px 0
+	}
+	
+	.detail-product-performance ul .progress {
+	    display: inline-block;
+	    background: #c8d2e0;
+	    width: 150px;
+	    height: 4px;
+	    vertical-align: middle;
+	    margin-right: 8px
+	}
+	
+	.detail-product-performance ul em {
+	    font-size: 14px;
+	    color: #333;
+	    letter-spacing: 0;
+	    line-height: 20px
+	}
+	
+	.detail-product-performance .box-tag {
+	    font-size: 14px;
+	    color: #666;
+	    line-height: 18px;
+	    vertical-align: middle;
+	    position: relative;
+	    margin-top: -26px
+	}
+	
+	.detail-product-performance .box-tag a {
+	    text-decoration: none
+	}
+	
+	.detail-product-performance .box-tag .ui2-icon {
+	    font-size: 16px;
+	    color: #999;
+	    margin-right: 4px;
+	    position: relative;
+	    top: 1px
+	}
+	
+	.detail-product-performance .box-header {
+	    border-bottom: 1px solid #e6e7eb;
+	    height: 30px;
+	    padding: 14px 16px
+	}
+	
+	.detail-product-performance .box-header h2 {
+	    font-size: 14px;
+	    color: #262626;
+	    letter-spacing: 0;
+	    line-height: 18px;
+	    margin: 0
+	}
+	
+	.detail-product-performance .box-header .sub-scription {
+	    font-size: 12px;
+	    color: #999;
+	    letter-spacing: 0;
+	    text-align: left
+	}
+	
+	.detail-product-performance .highcharts-axis,.detail-product-performance .highcharts-axis-labels,.detail-product-performance .highcharts-button,.detail-product-performance .highcharts-credits,.detail-product-performance .highcharts-grid,.detail-product-performance .highcharts-legend {
+	    display: none
+	}
+	
+	.detail-product-performance {
+	    background: #f7f7fa;
+	    border: 1px solid #dcdee3;
+	    width: 348px
+	}
+	
+	.detail-product-performance .chart {
+	    min-height: 110px;
+	    position: relative
+	}
+	
+	.detail-product-performance .chart .chart-container {
+	    position: absolute;
+	    top: 0;
+	    left: -45px
+	}
+	
+	.detail-product-performance .line {
+	    border-bottom: 1px solid #e6e7eb;
+	    margin: 0 auto;
+	    width: 317px;
+	    height: 1px
+	}
+	
+	.detail-product-performance .sub-box .sub-scription {
+	    font-size: 12px;
+	    color: #999;
+	    letter-spacing: 0;
+	    text-align: left;
+	    margin: 16px;
+	    cursor: pointer
+	}
+	
+	.detail-product-performance .sub-box .gmv,.detail-product-performance .sub-box .trans {
+	    font-size: 22px;
+	    color: #333;
+	    letter-spacing: 0;
+	    line-height: 26px;
+	    text-align: left;
+	    margin-left: 16px
+	}
+	
+	.detail-product-performance .sub-box.margin-v-20 {
+	    margin-top: 20px;
+	    margin-bottom: 20px
+	}
+	
+	.detail-product-performance .gmv:after,.detail-product-performance .trans:after {
+	    content: "GMV";
+	    font-size: 12px;
+	    color: #999;
+	    letter-spacing: 0;
+	    text-align: left;
+	    margin-left: 8px
+	}
+	
+	.detail-product-performance .trans:after {
+	    content: "Transactions"
+	}
+	
+	.detail-product-performance .highcharts-background {
+	    fill: transparent
+	}
+	
+	.widget-detail-overview .supply-verify-tips {
+	    position: absolute;
+	    margin-left: 50px;
+	    margin-top: 4px
+	}
+	
+	.do-entry-item-val .ui2-table td,.ui2-table th {
+	    padding: 6px 12px
+	}
+	
+	.widget-detail-overview.widget-detail-overview-for-spu .do-overview {
+	    border: none
+	}
+	
+	.widget-detail-overview.widget-detail-overview-for-spu .do-entry .do-entry-list {
+	    font-size: 14px
+	}
+	
+	.widget-detail-overview.widget-detail-overview-for-spu .do-overview .do-entry-title {
+	    text-align: left;
+	    line-height: 26px;
+	    font-size: 18px;
+	    color: #333;
+	    font-weight: 700;
+	    padding: 20px 0 12px
+	}
+	
+	.widget-detail-overview.widget-detail-overview-for-spu .do-entry dt {
+	    width: 117px;
+	    text-align: right;
+	    margin-right: 10px
+	}
+	
+	.supply-ability-table.ui2-table-normal {
+	    width: auto;
+	    max-width: 100%
+	}
+	
+	.supply-ability-table.ui2-table-zebra tr:nth-child(2n) {
+	    background: none
+	}
+	
+	.widget-detail-overview .do-entry dt {
+	    width: 110px
+	}
+	
+	.do-entry.product-certifications .do-entry-item-key,.do-entry.product-certifications .do-entry-item-val {
+	    line-height: 30px;
+	    height: 30px;
+	    vertical-align: middle
+	}
+	
+	.do-entry.do-entry.product-certifications .do-entry-title-verified {
+	    display: inline-block;
+	    margin-left: 10px;
+	    color: #ffac75
+	}
+	
+	.do-entry.do-entry.product-certifications .do-entry-list>.do-entry-item>.do-entry-item {
+	    color: #000;
+	    width: auto;
+	    margin-right: 10px
+	}
+	
+	.do-entry.do-entry.product-certifications .do-entry-list>.do-entry-item>.do-entry-item-val {
+	    margin-left: 5px
+	}
+	
+	.do-entry.do-entry.product-certifications .do-entry-item-val {
+	    color: #666
+	}
+	
+	.do-entry.do-entry.product-certifications .icbu-certificate-icon {
+	    vertical-align: middle
+	}
+	
+	.do-entry.do-entry.product-certifications .do-entry-list>.do-entry-item {
+	    float: none;
+	    line-height: 30px;
+	    height: 30px;
+	    overflow: hidden;
+	    position: relative;
+	    width: auto
+	}
+	
+	.do-entry-list.key-attrs {
+	    font-size: 14px;
+	    padding-left: 20px
+	}
+	
+	.do-entry-list.key-attrs .key-attrs-table {
+	    text-align: left;
+	    margin-bottom: 20px
+	}
+	
+	.do-entry-list.key-attrs .key-attrs-table th {
+	    color: #999;
+	    padding-right: 40px
+	}
+	
+	.do-entry-list.key-attrs .key-attrs-table td {
+	    padding-right: 40px;
+	    overflow: hidden;
+	    word-wrap: normal;
+	    white-space: nowrap;
+	    text-overflow: ellipsis;
+	    max-width: 160px;
+	    color: #151515
+	}
+	
+	.widget-detail-overview .do-content-separate .do-entry-separate dl {
+	    width: 300px
+	}
+	
+	.widget-detail-overview .do-entry-separate dl {
+	    width: 480px
+	}
+	
+	.widget-detail-overview .do-entry-item.product-package-image .package-img-container {
+	    display: inline-block;
+	    position: relative;
+	    width: 32px;
+	    height: 32px;
+	    margin-right: 8px
+	}
+	
+	.widget-detail-overview .do-entry-item.product-package-image .package-img-entry {
+	    width: 100%;
+	    height: 100%;
+	    filter: brightness(50%)
+	}
+	
+	.widget-detail-overview .do-entry-item.product-package-image .package-img-mask {
+	    background: #000;
+	    opacity: .5
+	}
+	
+	.widget-detail-overview .do-entry-item.product-package-image .package-img-magnifier {
+	    width: 16px;
+	    height: 16px;
+	    display: inline-block;
+	    background: url(//img.alicdn.com/tfs/TB1QwV.QFXXXXaiXXXXXXXXXXXX-180-200.png) scroll 0 0 no-repeat;
+	    background-position: -20px -20px;
+	    vertical-align: middle;
+	    position: absolute;
+	    margin: auto;
+	    top: 0;
+	    right: 0;
+	    left: 0;
+	    bottom: 0;
+	    filter: brightness(200%)
+	}
+	
+	.ui2-balloon.package-image-balloon {
+	    padding: 0;
+	    border: none;
+	    box-shadow: none;
+	    -webkit-box-shadow: none
+	}
+	
+	.ui2-balloon.package-image-balloon:after {
+	    content: none
+	}
+	
+	.ui2-balloon.package-image-balloon [alt=package-img] {
+	    max-width: 1000px
+	}
