@@ -1,3 +1,7 @@
+/**
+ * 服务端接口URL
+ * 这是全部的服务端接口path,如果增加了新的接口，请按分类添加在这里，并写注释。
+ */
 export default {
 	//APP相关接口
 	appVersionCheck: '/wap/api/v1/app/version/check.htm',					// 检查app是否为最新版

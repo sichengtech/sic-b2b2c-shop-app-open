@@ -1,7 +1,9 @@
+/**
+ * 所有页面的path
+ * 如果增加了新的页面，请按分类添加在这里，并写注释。
+ */
 export default {
-    ////////////////
-	// 页面
-	////////////////
+
 	// index
 	startIndex: '/pages/index/index',											// 启动页
 	uGudie: '/pages/index/gudie',												// 引导页
@@ -25,7 +27,6 @@ export default {
 	uProductList: "/pages/product/productList/productList",						// 商品列表
 	uSearch: '/pages/product/search/search',									// 商品、店铺搜索
 	uConsultationForm: "/pages/product/consultationForm/consultationForm",		// 商品咨询表单
-
 
 
 	// user

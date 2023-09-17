@@ -25,7 +25,8 @@ const signMethod = obj => {
 	let encrypted = {
 		'data': data,
 		'make': timestamp,
-		'random': md5(sha3_256( add(data, add(timestamp, md5(add(salt, md5(basePath.baseUrl))))) ))
+		// 'random': md5(sha3_256( add(data, add(timestamp, md5(add(salt, md5(basePath.baseUrl))))) ))
+		'random': md5(sha3_256( add(data, add(timestamp, md5(salt))) ))
 	}
 	return encrypted;
 }

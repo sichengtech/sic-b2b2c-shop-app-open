@@ -393,7 +393,7 @@
 				loadShow: true,
 				showShare: false,
 				detailTop: 1100,
-				isShowShare: config.shareIsShow,
+				isShowShare: config.shareIsShow, //“分享”是否显示, 为true显示,为false不显示
 				storeType: 0
 			}
 		},
