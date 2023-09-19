@@ -1,6 +1,5 @@
 <template>
 	<view>
-		
 		<uni-nav-bar color="#333333" leftIcon="back" fixed="false" @click-left="back">
 			<view class="input-view">
 				<text class="view-text">{{ $t('支付') }}</text>
@@ -12,10 +11,8 @@
 				{{ $t('¥') }} <text>{{ totalPrice }}</text>{{ totalPriceValue }}
 			</text>
 		</view>
-	
-
-
 		
+		<!-- App、H5 (非微信小程序) -->
 		<!-- #ifndef MP-WEIXIN -->
 		<view class="title">{{ $t('支付方式') }}</view>
 		<view class="uni-list">
@@ -45,11 +42,15 @@
 			</view>
 		</view>
 		<!-- #endif -->
+		
+		<!-- App、H5 (非微信小程序) -->
 		<!-- #ifndef MP-WEIXIN -->
 		<view v-if="payWayList.length" class="pay" :style="{top: viewTop}" @tap="orderPay">
 			{{ $t('支付') }}
 		</view>
 		<!-- #endif -->
+		
+		<!-- 微信小程序 -->
 		<!-- #ifdef MP-WEIXIN -->
 		<!-- 微信小程序需要授权， 才能拿到UnionID交给服务端去换openId -->
 		<view v-if="!isAuthorizeWX" class="authorize" :style="{top: viewTop}">
@@ -64,7 +65,7 @@
 
 <script>
 	import * as pay from "../../../common/pay.js"
-	import Base from "../../../common/plugin/base64.js"
+	import Base64 from "../../../common/plugin/base64.js"
 	export default {
 		data() {
 			return {
@@ -99,6 +100,8 @@
 		},
 		computed: {
 			totalPriceValue() {
+				console.log("####this.totalPrice####")
+				console.log(this.totalPrice)
 				return this.totalPrice.split('.')[1] ? '' : '.00'
 			}
 		},
@@ -112,6 +115,7 @@
 			// #endif
 		},
 		methods: {
+			//"返回"按钮的处理函数
 			back() {
 				let that = this
 				uni.showModal({
@@ -126,25 +130,31 @@
 								url: that.prefix.uOrderList + '?order=10'
 							})
 						} else if (res.cancel) {
-							console.log('用户点击取消');
+							console.log('用户点击取消，将继续支付。');
 						}
 					}
 				});
 			},
 			init() {
 				let platformType = ''
+				//如果是App
 				// #ifdef APP-PLUS
 				platformType = 1
 				// #endif
+				
+				//如果是H5
 				// #ifdef H5
 				platformType = 2
 				// #endif
+				
+				//如果是微信小程序
 				// #ifdef MP-WEIXIN
 				platformType = 3
 				// #endif
 
 				this.$api.payWayList({
 					useTerminal: platformType,
+					//如果是微信小程序
 					// #ifdef MP-WEIXIN
 					payWayNum: 'weixin_mp'
 					// #endif
@@ -166,9 +176,9 @@
 					
 					let data = res.data
 					// weixin_app, ali_app
-					
 					let myPayList = this.myPayList
 					data = res.data.map((value, index) => {
+						//如果是App、H5(非微信小程序)
 						// #ifndef MP-WEIXIN
 						value.phonePayId = myPayList[value.payWayNum].phonePayId
 						value.payLogo = myPayList[value.payWayNum].payLogo
@@ -178,73 +188,12 @@
 					})
 					data[0].checked = true
 					this.payWayList = data
-					
 				})
 			},
-			requestPayment(payTypeData) {
-				let that = this
-				pay.orderPay(payTypeData, this.orderIds, (data_h5) => {
-					// #ifdef APP-PLUS
-					uni.hideLoading()
-					uni.showLoading({
-						title: that.$t('支付成功！跳转中'),
-						success() {
-							setTimeout(_ => {
-								uni.redirectTo({
-									url: that.prefix.uOrderList + '?order=20'
-								})
-								uni.hideLoading();
-							}, 500)
-						}
-					});
-					
-					// #endif
-					// #ifdef H5
-					if(payTypeData.phonePayId === 'alipay') {
-						const div = document.createElement('div');
-						div.innerHTML = Base.decode(data_h5.data)
-						document.body.appendChild(div);
-						document.forms[0].submit();
-						return
-					}
-
-					if(payTypeData.phonePayId === 'wxpay') {
-						window.location.replace(data_h5.data.mweb_url+'&redirect_url='+encodeURIComponent(window.location.href+'&tip=yes'))
-					}
-					// #endif
-
-				}, (error) => {
-					uni.hideLoading()
-					let reg = /(60012)|(-2)|(62001)/g
-					if(reg.test(error.errMsg)) {
-						uni.showModal({
-							title: that.$t('提示'),
-							content: that.$t('支付已取消'),
-							cancelText: that.$t('否'),
-							confirmText: that.$t('是'),
-							showCancel: false
-						})
-					} else {
-						uni.showModal({
-							title: that.$t('提示'),
-							content: error.errMsg,
-							confirmText: that.$t('是'),
-							showCancel: false
-						})
-					}
-				})
-			},
+			//////////////////////////////////////////
+			//“支付”按钮的处理函数。  主入口函数
+			//////////////////////////////////////////
 			orderPay() {
-				// 防止用户多次点击
-				uni.showLoading({
-					title: '提交订单中',
-				})
-				clearTimeout(this.timer)
-				this.timer = setTimeout(_ => {
-					this.payDataDeploy()
-				}, 200)
-			},
-			payDataDeploy() {
 				let that = this
 				let payTypeData = null
 				this.payWayList.forEach(item => {
@@ -252,38 +201,141 @@
 						payTypeData = item
 					}
 				})
+				// 如果是微信小程序
 				// #ifdef MP-WEIXIN
 				if(!this.isAuthorizeWX) {
 					this.openErrMsg('微信小程序支付需要先授权')
 					return
 				}
-				pay.wechatXiaoChengXuPay(payTypeData, this.orderIds, res => {
-					setTimeout(_ => {
-						uni.redirectTo({
-							url: that.prefix.uOrderList + '?order=20'
-						})
-						uni.hideLoading();
-					}, 500)
-				}, err => {
-					setTimeout(_ => {
-						uni.redirectTo({
-							url: that.prefix.uOrderList + '?order=0'
-						})
-						uni.hideLoading();
-					}, 500)
-				})
+				this.weixin_Payment(payTypeData) //进入weixin_Payment()函数，做微信小程序支付业务。
 				// #endif
 
+				// 如果是App、H5 (非微信小程序)
 				// #ifndef MP-WEIXIN
-				this.requestPayment(payTypeData)
+				this.apph5_Payment(payTypeData)  //进入apph5_Payment()函数，做App支付、h5支付业务。
 				// #endif
 			},
+			
+			//“支付”按钮的处理函数-第二步 (微信小程序支付时会走到这里)
+			weixin_Payment(payTypeData){
+				let that = this
+				//调用pay的wechatMpPay()方法，做“订单支付-微信小程序支付”业务
+				pay.wechatMpPay(
+					payTypeData,  //这是第1个参数
+					this.orderIds,  //这是第2个参数
+					//这是第3个参数-支付成功回调函数
+					(res) => {
+						uni.hideLoading()
+						uni.showLoading({
+							title: that.$t('支付成功！跳转中'),
+							success() {
+								setTimeout(_ => {
+									uni.hideLoading();
+									uni.redirectTo({
+										url: that.prefix.uOrderList + '?order=20'
+									})
+								}, 500)
+							}
+						});
+					}, 
+					 //这是第4个参数-错误回调函数
+					(error) => { 
+						uni.hideLoading()
+						//error.message 是接口咱自己商城接口返回，符合：统一数据包装体和状态码 有要求
+						//error.message 这个错误信息已在服务端做过了国际化
+						//error.errMsg 好像是三方接口返回的
+						let msg= that.$t('加载错误')
+						if(error){
+							msg= error.message || error.errMsg
+						}
+						uni.showModal({
+							title: that.$t('提示'),
+							content: msg,
+							confirmText: that.$t('关闭'),
+							showCancel: false
+						})
+					}
+				)
+			},
+			
+			//“支付”按钮的处理函数-第三步 (App支付、h5支付时会走到这里)
+			apph5_Payment(payTypeData) {
+				let that = this
+				//调用pay的app_h5_Pay()函数，做"订单支付-App支付、h5支付"业务
+				pay.app_h5_Pay(
+					payTypeData, //这是第1个参数
+					this.orderIds, //这是第2个参数
+					
+					//这是第3个参数-支付成功回调函数
+					(data_h5) => {
+						// 如果是App
+						// #ifdef APP-PLUS
+						uni.hideLoading()
+						uni.showLoading({
+							title: that.$t('支付成功！跳转中'),
+							success() {
+								setTimeout(_ => {
+									uni.redirectTo({
+										url: that.prefix.uOrderList + '?order=20'
+									})
+									uni.hideLoading();
+								}, 500)
+							}
+						});
+						// #endif
+						
+						// 如果是H5
+						// #ifdef H5
+						if(payTypeData.phonePayId === 'alipay') {
+							const div = document.createElement('div');
+							div.innerHTML = Base64.decode(data_h5.data)
+							document.body.appendChild(div);
+							document.forms[0].submit();
+							return
+						}
+						if(payTypeData.phonePayId === 'wxpay') {
+							window.location.replace(data_h5.data.mweb_url+'&redirect_url='+encodeURIComponent(window.location.href+'&tip=yes'))
+						}
+						// #endif
+
+					}, 
+					//这是第4个参数-支付错误回调函数
+					(error) => {
+						uni.hideLoading()
+						console.log("支付失败的回调函数的数据-App支付、h5支付时")
+						console.log(error)
+						let reg = /(60012)|(-2)|(62001)/g
+						if(reg.test(error.errMsg)) {
+							uni.showModal({
+								title: that.$t('提示'),
+								content: that.$t('支付已取消'),
+								//cancelText: that.$t('否'),
+								confirmText: that.$t('关闭'),
+								showCancel: false
+							})
+						} else {
+							//error.message 是接口咱自己商城接口返回，符合：统一数据包装体和状态码 有要求
+							//error.message 这个错误信息已在服务端做过了国际化
+							//error.errMsg 好像是三方接口返回的
+							let msg=error.message || error.errMsg  
+							uni.showModal({
+								title: that.$t('提示'),
+								content: msg,
+								confirmText: that.$t('关闭'),
+								showCancel: false
+							})
+						}
+					}
+				)
+			},			
 			updetaPayType(payTypeData) {
 				this.payWayList = this.payWayList.map(value => {
 					value.checked = value.payWayNum === payTypeData ? true : false
 					return value;
 				})
 			},
+			
+			// 如果是微信小程序
 			// #ifdef MP-WEIXIN
 			// 获取微信授权状态
 			getAuthorizeStatus() {
@@ -294,13 +346,11 @@
 					}
 				})
 			},
-
 			onGotUserInfo(e) {
 				if(e.detail.errMsg == 'getUserInfo:ok') {
 					this.isAuthorizeWX = true
 				}
 			},
-
 			// #endif
 		}
 	}

@@ -514,7 +514,7 @@
     ],
     "globalStyle" : {
         "navigationBarTextStyle" : "white",
-        "navigationBarTitleText" : "思程商城",
+        "navigationBarTitleText" : "思程Shop",
         // "navigationBarTitleText" : "Achasoda",
         "navigationBarBackgroundColor" : "#0faeff",
         "backgroundColor" : "#fbf9fe"

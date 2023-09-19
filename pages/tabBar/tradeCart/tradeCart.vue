@@ -52,21 +52,21 @@
 									</view>
 								</label>
 							</checkbox-group>
-							<view class="list-flex" @tap="navTo(pro.pid)">
+							<view class="list-flex" @tap="navTo(pro.productSpu.pid)">
 								<view class="flex-off" v-if="pro.isOffShelf">{{ $t('下架') }}</view>
 								<image class="flex-img" :src="pro.image" @error="imgErr(key, i)" />
 							</view>
 							<view class="list-flex">
-								<view class="product-tit" @tap="navTo(pro.pid)">
-									{{ pro.pid }}
-									{{ pro.name }}
+								<view class="product-tit" @tap="navTo(pro.productSpu.pid)">
+									{{ pro.productSpu.pid }}
+									{{ pro.productSpu.name }}
 								</view>
-								<view class="product-purchase" v-if="pro.skuValue && !pro.isOffShelf" @tap="navTo(pro.pid)">
+								<view class="product-purchase" v-if="pro.skuValue && !pro.isOffShelf" @tap="navTo(pro.productSpu.pid)">
 									<!-- 规格： -->
 									<text class="">{{ pro.skuValue }}</text>
 								</view>
 								<view class="product-purchase" v-if="!pro.isOffShelf">
-									{{ $t('起购量') }}<text class="purchase-num">{{ pro.purchasingAmount || 1 }}</text>
+									{{ $t('起购量') }}<text class="purchase-num">{{ pro.productSpu.purchasingAmount || 1 }}</text>
 								</view>
 								<view class="product-price" v-if="!pro.isOffShelf">
 									<text class="price">{{ '￥' + formatMoney(pro.price)}}</text>
@@ -119,7 +119,7 @@
 				showDele: false,
 				showImg: true,
 				seleAll: false,
-				cartLists: {},
+				cartLists: {}, //购物车列表
 				showLoadMore: false
 			}
 		},
@@ -193,87 +193,93 @@
 				})
 			},
 			init() {
-				this.$api.tradeCartList().then(res => {
+				this.$api.tradeCartList({}).then(res => {
 					let cartList = res.data
-					let arr = Object.assign({}, cartList)
+					console.log("购物车数据：")
+					console.log(cartList)
+					let arr = Object.assign({}, cartList)  //浅拷贝Object.assign方法只会拷贝源对象可枚举的的自有属性到目标对象
 					if(Object.keys(arr).length === 0) {
 						this.showLoadMore = true
-						this.cartLists = {}
+						this.cartLists = {}//向外输出
+						console.log("这个数据很重要444："+this.cartLists)
+						console.log(this.cartLists)
 						return false
 					} else {
-						this.showLoadMore = false
-						let	pids = [],
-							skuIds = [],
-							storeName = '';
-							
+						this.showLoadMore = false	
+						//对接口返回数据，做一轮加工。
 						for(var k in cartList) {
 							if(cartList.hasOwnProperty(k)) {
-								cartList[k].forEach(n => {
-									pids.push(n.pid)
-									skuIds.push(n.skuId)
+								cartList[k].forEach((n, i) => {
+									arr[k][i].checked = false;//初始化复选框
+									//先设置一个默认图
+									arr[k][i].image = this.prefix.noProductImg
+									// 当商品有图片时，拼接图片全路径赋值给一个新属性image
+									if(arr[k][i].productSpu.image) {
+										arr[k][i].image = this.prefix.baseImgUrl + arr[k][i].productSpu.image + this.imgShrink(100, 100);
+									}
 								})
+							}
+						}		
+						this.cartLists = arr;//向外输出
+						console.log("这个数据很重要333："+this.cartLists)
+						console.log(this.cartLists)
+
+						
+						// let	pids = [],
+						// skuIds = [],
+						// storeName = '';
+							
+						// for(var k in cartList) {
+						// 	if(cartList.hasOwnProperty(k)) {
+						// 		cartList[k].forEach(n => {
+						// 			pids.push(n.pid)
+						// 			skuIds.push(n.skuId)
+						// 		})
 								
-							}
-						}
-						Promise.all([
-							this.$api.productList({pids: pids.join()}),
-							this.$api.productSkuList({skuIds: skuIds.join()})
-						]).then(res => {
+						// 	}
+						// }
+						// console.log("二次查询参数：")
+						// console.log(pids)
+						// console.log(skuIds)
+						// Promise.all([
+						// 	this.$api.productList({pids: pids.join()}),//此接口依赖搜索引擎
+						// 	this.$api.productSkuList({skuIds: skuIds.join()})
+						// ]).then(res => {
 
-							// 商品
-							let productList = res[0].data.productList
+						// 	// 商品
+						// 	let productList = res[0].data.productList
 
-							// 规格
-							let skuList = res[1].data
+						// 	// 规格
+						// 	let skuList = res[1].data
 
-							for(var k in cartList) {
-								if(cartList.hasOwnProperty(k)) {
+						// 	for(var k in cartList) {
+						// 		if(cartList.hasOwnProperty(k)) {
 
-									cartList[k].forEach((n, i) => {
-										arr[k][i].checked = false;
-										arr[k][i].image = this.prefix.noProductImg
-										if(productList.length > 0) {
-											productList.forEach(m => {
-												if(n.pid === m.pid) {
-													arr[k][i] = Object.assign({}, n, m);
-													// 当商品列表有图片时
-													if(m.image) {
-														arr[k][i].image = this.prefix.baseImgUrl + m.image + this.imgShrink(100, 100);
-													}
-												}
-											})
-										}
-										if(skuList.length > 0) {
-											skuList.forEach((m, j) => {
-												if(n.pid === m.pid) {
-													arr[k][i] = Object.assign({}, arr[k][i], m)
-												}
-											})
-										}
-									})
+						// 			cartList[k].forEach((n, i) => {
+						// 				arr[k][i].checked = false;
+						// 				arr[k][i].image = this.prefix.noProductImg
+						// 				if(productList.length > 0) {
+						// 					productList.forEach(m => {
+						// 						if(n.pid === m.pid) {
+						// 							arr[k][i] = Object.assign({}, n, m);
+						// 							// 当商品列表有图片时
+						// 							if(m.image) {
+						// 								arr[k][i].image = this.prefix.baseImgUrl + m.image + this.imgShrink(100, 100);
+						// 							}
+						// 						}
+						// 					})
+						// 				}
+						// 				if(skuList.length > 0) {
+						// 					skuList.forEach((m, j) => {
+						// 						if(n.pid === m.pid) {
+						// 							arr[k][i] = Object.assign({}, arr[k][i], m)
+						// 						}
+						// 					})
+						// 				}
+						// 			})
+						// 		}
+						// 	}
 
-								}
-
-							}
-
-
-							// datum.forEach((n, i) => {
-							// 	datum[i].checked = false
-
-							// 	// 商品规格
-							// 	res[1].data.forEach((m, j) => {
-							// 		if(n.pid === m.pid) {
-							// 			datum[i] = m
-							// 		}
-							// 	})
-							// })
-							// let obj = {
-							// 	storeName: storeName,
-							// 	productList: datum,
-							// 	checked: false
-							// }
-							this.cartLists = arr;
-						})
 					}
 				}).catch(err => {
 					this.openErrMsg(err.message || '加载错误')
@@ -387,6 +393,9 @@
 					this.cartLists = arr
 				})
 			},
+			///////////////////////////////
+			//去结算  (核心业务)
+			///////////////////////////////
 			jiesuan() {
 				let that = this;
 				let count = 0;
@@ -414,17 +423,19 @@
 								if(item.isOffShelf) {
 									this.openErrMsg(that.$t('不能购买无效的商品'));
 									return;
-								} else if(item.stock < item.count) {
-									this.openErrMsg(item.name + that.$t('库存不足'));
+								} else if(item.productSku.stock < item.count) {
+									this.openErrMsg(item.productSpu.name + that.$t('库存不足'));
 									return;
-								} else if(item.purchasingAmount > this.cartLists[k].reduce((count, item) => { // 同店铺同ID的商品总计数量
-									if(item.pid === item.pid && item.checked) {
+								} else if(item.productSpu.purchasingAmount > this.cartLists[k].reduce((count, item) => { 
+									// purchasingAmount; 是 起购量
+									// 同店铺同ID的商品总计数量
+									if(item.productSpu.pid === item.productSpu.pid && item.checked) {
 										return count += item.count
 									} else {
 										return count
 									}
 								}, 0)) {
-									this.openErrMsg(that.$t('购买数量必须大于起购量,该商品的起购量是X', {num: item.purchasingAmount}), 5000);
+									this.openErrMsg(that.$t('购买数量必须大于起购量,该商品的起购量是X', {num: item.productSpu.purchasingAmount}), 5000);
 									return;
 								}else {
 									arr.push(this.cartLists[k][i].cartId);
@@ -435,7 +446,8 @@
 				}
 
 				uni.navigateTo({
-					url: this.prefix.uOrderOk + '?stat=1&type=1&ids='+ arr.join() +'&productSumPrice=' + this.cartCount
+					url: this.prefix.uOrderOk + '?stat=1&type=1&ids='+ arr.join() +'&productSumPrice=' + this.cartCount   
+					//this.cartCount 是商品总价
 				})
 
 			},

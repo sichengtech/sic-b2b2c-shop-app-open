@@ -599,7 +599,7 @@ module.exports = {
 	},
 
 	/**
-	 * 确认订单： 订单信息
+	 * 获取确认订单页数据接口
 	 */
 	tradeOrderConfimOrder(data) {
 		return ajax.post(ajaxPath.tradeOrderConfimOrder, basePath.baseUrl, data).then(response => response)

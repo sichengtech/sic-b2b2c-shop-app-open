@@ -1,9 +1,9 @@
 {
-    "name" : "思程商城",
+    "name" : "思程Shop",
     "appid" : "__UNI__AD4B298",
     "description" : "",
-    "versionName" : "1.0.20",
-    "versionCode" : "100",
+    "versionName" : "2.0.1",
+    "versionCode" : 201,
     "networkTimeout" : {
         "request" : 300000
     },
@@ -49,7 +49,8 @@
                 ]
             },
             "ios" : {
-                "urltypes" : "sicheng"
+                "urltypes" : "sicheng",
+                "dSYMs" : false
             },
             /* ios打包配置 */
             "sdkConfigs" : {
@@ -67,7 +68,8 @@
                         "appid" : "wx25fe5fb28942e0ab",
                         "UniversalLinks" : "https://test.sicheng.net/wap/"
                     }
-                }
+                },
+                "ad" : {}
             },
             "splashscreen" : {
                 "android" : {
@@ -123,7 +125,7 @@
         "appid" : "wx0b579b1fcf8ce991",
         "setting" : {
             "minified" : true,
-            "urlCheck" : true,
+            "urlCheck" : false,
             "es6" : true,
             "postcss" : true
         },
@@ -131,7 +133,7 @@
     },
     "h5" : {
         "template" : "index.html",
-        "title" : "思程商城",
+        "title" : "思程Shop",
         "devServer" : {
             "https" : false,
             "port" : "",

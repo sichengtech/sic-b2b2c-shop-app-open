@@ -4,6 +4,11 @@ export default {
     '零': 'Retail',
     '加载错误': 'Loading error',
     '123': '{0}{num}',
+	'保存': 'Save',
+	'是': 'Yes',
+	'否': 'No',
+	'加载中': 'Loading...',
+	'关闭': 'Close',
 
     // vuelidate.js
     '错误效验': 'ERR MESSAGE',
@@ -57,10 +62,6 @@ export default {
     '请输入手机号': 'Please enter your mobile number',
     '地址': 'address',
     '请输入详细地址': 'Please enter the detailed address',
-    '保存': 'Save',
-    '是': 'Yes',
-    '否': 'No',
-    '加载中': 'Loading...',
 
     // collectionProduct.vue
     '商品收藏': 'Commodity collection',
@@ -341,7 +342,6 @@ export default {
     '手机号注册': 'Mobile number registration',
     '请输入注册账号': 'Please enter a registered account',
     '已阅读用户协议': 'Read User Agreement',
-    '关闭': 'Close',
     '请勾选用户协议': 'Please check the user agreement',
     '用户协议': 'User Agreement',
 

@@ -61,7 +61,7 @@
 					type: 0,
 					href: `${ this.prefix.baseUrl }${ this.prefix.h5Path }#/pages/product/productDetail/productDetail?pid=${ this.shareData.pid }`,
 					title: this.shareData.productName,
-					summary: "我在思程商场发现一个不错的商品，赶快来看看吧。",
+					summary: "我在这里发现一个不错的宝贝，赶快来看看吧。",
 					imageUrl: this.prefix.baseImgUrl + this.shareData.img.path,
 					success(res) {
 						console.log("success:" + JSON.stringify(res));

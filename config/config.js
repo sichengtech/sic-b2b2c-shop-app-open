@@ -11,17 +11,17 @@ import pagePath from './pagePath'
 export const basePath = {
 	h5Path: '/h5/index.html',   // h5首页的路径
 	
-	// 演示环境
-	baseUrl: 'https://demo1.sicheng.net',
-	baseImgUrl: 'https://demo1.sicheng.net/upload/filestorage', 
+	// // 演示环境
+	// baseUrl: 'https://demo1.sicheng.net',
+	// baseImgUrl: 'https://demo1.sicheng.net/upload/filestorage', 
 
 	// // 测试环境
 	// baseUrl: 'http://192.168.92.44',
 	// baseImgUrl: 'http://192.168.92.44/upload/filestorage',
 	
-	// // 开发环境
-	// baseUrl: 'http://127.0.0.1',
-	// baseImgUrl: 'http://127.0.0.1/upload/filestorage',
+	// 开发环境
+	baseUrl: 'http://127.0.0.1:8081',
+	baseImgUrl: 'http://127.0.0.1:8081/upload/filestorage',
 	
 	// // 开发环境2
 	// baseUrl: 'http://192.168.9.183:8080',

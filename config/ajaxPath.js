@@ -8,7 +8,7 @@ export default {
 	appAdList: '/wap/api/v1/app/ad/list.htm',								// app引导页 欢迎页
 
     // 支付相关
-    payUnifiedOrder: '/wap/api/v1/shop/pay/unifiedorder.htm', 				// app支付地址
+    payUnifiedOrder: '/wap/api/v1/shop/pay/unifiedorder.htm', 				// app支付地址，unified order是统一下单的意思
 	payWayList: '/wap/api/v1/shop/pay/payWayList.htm', 						// 支付方式列表
 
 	siteHotSearchWordList: '/wap/api/v1/site/HotSearchWord/list.htm',		// 热搜词
@@ -35,8 +35,8 @@ export default {
 	//商品相关接口
 	productOne: '/wap/api/v1/product/one.htm',								// 商品信息，商品详情页
 	productAll: '/wap/api/v1/product/all.htm',								// 商品详情汇总
-	productPage: '/wap/api/v1/product/page.htm',							// 获取商品列表（有分页）
-	productList: '/wap/api/v1/product/list.htm', 							// 获取商品列表，店铺首页
+	productPage: '/wap/api/v1/product/page.htm',							// 获取商品列表（有分页），依赖搜索引擎
+	productList: '/wap/api/v1/product/list.htm', 							// 获取商品列表，依赖搜索引擎
 	productDetail: '/wap/api/v1/product/detail.htm', 						// 商品详情
 	productImageList: '/wap/api/v1/product/image/list.htm', 				// 商品轮播图
 	productSectionPriceList: '/wap/api/v1/product/sectionPrice/list.htm',	// 商品价格，区间价格
@@ -116,7 +116,7 @@ export default {
 	tradCommentSave: '/wap/api/v1/trade/comment/save.htm',				// 商品评价，保存
 	tradeLogisticsInfo: '/wap/api/v1/trade/logistics/info.htm',			// 物流信息
 	tradeOrderConfirmReceipt: '/wap/api/v1/trade/order/confirmReceipt.htm',		// 确认收货
-	tradeOrderConfimOrder: '/wap/api/v1/trade/order/confimOrder.htm',			// 确认订单
+	tradeOrderConfimOrder: '/wap/api/v1/trade/order/confimOrder.htm',			// 获取确认订单页数据接口
 	tradeOrderCalculateFreight: '/wap/api/v1/trade/order/calculateFreight.htm',	// 计算运费
 	
 	//订单发票相关接口

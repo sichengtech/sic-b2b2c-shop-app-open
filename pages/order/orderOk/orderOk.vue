@@ -2,18 +2,6 @@
 	<view class="user-order-ok">
 		
 		<!-- 头部 -->
-		<!-- <view class="header">
-			<view class="header-item" @tap="back">
-				<uni-icons type="back" color="#333333" size="22"></uni-icons>
-			</view>
-			<view class="header-item">确认订单</view>
-			<view class="header-item">
-				<text class="iconfont icon-xiaoxi4"></text>
-				<view class="item-abso">
-					<uni-badge :text="msgNum" type="danger"></uni-badge>
-				</view>
-			</view>
-		</view> -->
 		<uni-nav-bar color="#333333" fixed="true" @click-left="back" @click-right="tapRight">
 			<view class="input-view">
 				<text class="view-text">{{ $t('确认订单') }}</text>
@@ -47,10 +35,10 @@
 			</view>
 		</view>
 		
-		<view class="order-wrap" v-for="(item, key, index) in shopProductList" :key="index">
+		<view class="order-wrap" v-for="(item, kkey, index) in shopProductList" :key="index">
 			<view class="order-shop">
-				<view class="shop-name">{{ key.split('-')[0] }}</view>
-				<navigator :url="storeIndex + '?storeId=' + key.split('-')[1]">
+				<view class="shop-name">{{ splitKey0(item, kkey) }}</view>
+				<navigator :url="storeIndex + '?storeId=' +splitKey1(item, kkey)">
 					<view class="shop-skip">
 						<text>{{ $t('进入店铺') }}</text>
 						<text class="iconfont icon-arrowright"></text>
@@ -69,12 +57,12 @@
 						</view>
 						<view class="product-inner">
 							<view class="product-price"> {{ $t('¥') }}
-								<text v-if="project.type != 1">
+								<text v-if="project.productSpu.type != 1">
 									<!-- {{ project.type == 2 ? formatMoney(project.minPrice2) : formatMoney(project.minPrice1) }} -->
-									{{ project.type == 2 ? formatMoney(project.price) : formatMoney(project.minPrice1) }}
+									{{ project.productSpu.type == 2 ? formatMoney(project.productSku.price) : formatMoney(project.productSku.minPrice1) }}
 								</text>
-								<text v-if="project.type == 1">
-									{{ formatMoney(project.price) }}
+								<text v-if="project.productSpu.type == 1">
+									{{ formatMoney(project.productSku.price) }}
 								</text>
 							</view>
 							<view class="product-num">x 
@@ -158,10 +146,11 @@
 			}
 		},
 		onLoad(param) {
-			this.stat = param.stat
-			this.ids = param.ids
-			if(param.star === '1') {
-				this.productSumPrice = param.productSumPrice
+			//前一个页面“购物车”传来4个参数：stat=1&type=1&ids=9338&productSumPrice=390
+			this.stat = param.stat //stat=1 从购物车页直接下单，stat==2 从单详情页下单
+			this.ids = param.ids //商品的ids
+			if(param.star === '1') { //param.star 是什么？笔误？
+				this.productSumPrice = param.productSumPrice   //商品总价
 			}
 			this.data = param
 			this.init()
@@ -285,6 +274,7 @@
 			init() {
 				let storeId = '',
 					storeName = '',
+					//stat=1:从购物车页直接下单，stat==2 从单详情页下单
 					param = this.stat === '1' ? {
 						stat: this.stat,
 						ids: this.ids,
@@ -306,71 +296,89 @@
 					this.openErrMsg(err.message || '加载错误')
 				})
 				
+				/////////////////////////////////
+				//获取确认订单页数据的接口
+				/////////////////////////////////
+				console.log("获取确认订单页数据的接口-提交的参数：")
+				console.log(param)
 				this.$api.tradeOrderConfimOrder(param).then(res => {
-					let productList = res.data.cartMap,
-						str = '',
-						skuIdsArr = [];
-						let totalPrice = 0
+					console.log("获取确认订单页数据的接口-返回的结果：")
+					console.log(res)
+					let productList = res.data.cartMap;
+					let str = '';
+					let skuIdsArr = [];
+					let totalPrice = 0;
+										
 					for(let k in productList) {
 						if(productList.hasOwnProperty(k)) {
 							str = k
 						}
-						productList[k].forEach((n, i) => {
+						console.log("关键的KEY=："+str)
+						productList[k].forEach((n, i) => { //productList是: "壳牌思程自营店-1813":[]
 							cartIdList.push(n.cartId)
 							pid.push(n.pid)
 							count.push(n.count)
 							this.count += n.count
 							skuIdsArr.push(n.skuId)
+							
+							let childItem=n.productSpu  //childItem 是一个spu
+							let item=n  //item 是: "壳牌思程自营店-1813":[]
+							// 计算总价
+							if(childItem.type != 1) {
+								totalPrice += item.count * (childItem.type == 2 ? item.price : childItem.minPrice1)
+							} else {
+								totalPrice += item.count * item.price
+							}
+							//拼接出图片的全路径 
+							item.image = this.prefix.baseImgUrl + childItem.image
+							
+							//后添加店铺名、店铺ID 两个属性
+							let arr = str.split('-')
+							item.storeName = arr[0]
+							item.storeId = arr[1]
 						})
+						this.productSumPrice = totalPrice
+						this.shopProductList = productList   //这个数据很重要							
 					}
 					this.cartIdList = cartIdList
 					this.pid = pid
 					this.countList = count
-					
-					let arr = str.split('-')
-					storeName = arr[0]
-					storeId = arr[1]
-					// this.$api.productSkuList({ skuIds: skuIdsArr.join() }).then(res => {
-					// 	for(let k in productList) {
-					// 		if(productList.hasOwnProperty(k)) {
-					// 			productList[k].forEach((n, i) => {
-					// 				productList[k][i].image = this.prefix.noProductImg
-					// 				// 商品列表 图片
-					// 				// res.data.forEach((m, j) => {
-					// 				// 	if(n.pid === m.pid) {
-					// 				// 		productList[k][i].image = this.prefix.baseImgUrl + m.image;
-					// 				// 	}
-					// 				// })
+
+					// //二次查询补充商品信息（这是多余的不应该二次查询）
+					// //此接口依赖搜索引擎
+					// console.log("二次查询补充商品信息-提交的参数：")
+					// console.log({pids: pid.join()})
+					// this.$api.productList({pids: pid.join()}).then(res => {
+					// 	console.log("二次查询补充商品信息-返回的结果：")
+					// 	console.log(res)
+					// 	let data = res.data.productList
+					// 	let cartData = productList
+					// 	for(let k in cartData) {
+					// 		cartData[k].forEach((item, i) => {   //item 是: "壳牌思程自营店-1813":[]
+					// 			data.forEach((childItem) => {
+					// 				if(item.pid === childItem.pid) {   //childItem 是一个spu
+					// 					// 计算总价
+					// 					if(childItem.type != 1) {
+					// 						totalPrice += item.count * (childItem.type == 2 ? item.price : childItem.minPrice1)
+					// 					} else {
+					// 						totalPrice += item.count * item.price
+					// 					}
+					// 					item.image = this.prefix.baseImgUrl + childItem.image
+					// 					cartData[k][i] = Object.assign({}, childItem, item)
+					// 				}
 					// 			})
-					// 		}
+					// 		})
 					// 	}
+					// 	this.productSumPrice = totalPrice
+					// 	this.shopProductList = cartData   //这个数据重要
 					// }).catch(err => {
 					// 	this.openErrMsg(err.message || '加载错误')
 					// })
-					this.$api.productList({pids: pid.join()}).then(res => {
-						let data = res.data.productList
-						let cartData = productList
-						for(let k in cartData) {
-							cartData[k].forEach((item, i) => {
-								data.forEach((childItem) => {
-									if(item.pid === childItem.pid) {
-										// 计算总价
-										if(childItem.type != 1) {
-											totalPrice += item.count * (childItem.type == 2 ? item.price : childItem.minPrice1)
-										} else {
-											totalPrice += item.count * item.price
-										}
-										item.image = this.prefix.baseImgUrl + childItem.image
-										cartData[k][i] = Object.assign({}, childItem, item)
-									}
-								})
-							})
-						}
-						this.productSumPrice = totalPrice
-						this.shopProductList = cartData
-					}).catch(err => {
-						this.openErrMsg(err.message || '加载错误')
-					})
+					
+					/**
+					 * 收货地址表单：获取编辑信息
+					 * 确认订单：获取订单地址信息
+					 */
 					this.$api.userAddressOne().then(res => {
 						// 计算运费
 						if(res.data === '') {
@@ -445,6 +453,16 @@
 					url: url + '?userOrderOk=ok'
 				})
 			},
+			
+			//为了适应微信小程序而写的方法
+			//小程序需要在wxml页面使用spilt切割数组，是不是发现怎么用发现都报错，原来在wxml中使用复杂的运算是不行的。所以放在一个独立函数中。
+			//item参数虽然用着但也要带着，不然kkey的值就为undefined。奇怪不？
+			splitKey0(item, kkey){
+				return kkey.split('-')[0] ; //从"壳牌思程自营店-1813"中取店铺名
+			},
+			splitKey1(item, kkey){
+				return kkey.split('-')[1] ;//从"壳牌思程自营店-1813"中取店铺ID
+			}
 		}
 	}
 </script>

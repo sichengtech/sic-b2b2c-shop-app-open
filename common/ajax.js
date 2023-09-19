@@ -2,7 +2,7 @@ import storage from './storage';
 import uniRequest from 'uni-request'
 import { basePath } from "./../config/config"
 import pagePath from "./../config/pagePath"
-import Base from "./plugin/base64";
+import Base64 from "./plugin/base64";
 import md5 from "./plugin/md5.min.js"
 import { sha3_256 } from "./plugin/sha3.min.js"
 import i18n from '../i18n'
@@ -21,7 +21,7 @@ const signMethod = obj => {
 		data = JSON.parse(data)
 	}
 	data.wap_language = i18n.locale
-	data = Base.encode(JSON.stringify(data));
+	data = Base64.encode(JSON.stringify(data));
 	let encrypted = {
 		'data': data,
 		'make': timestamp,
@@ -62,7 +62,7 @@ uniRequest.interceptors.response.use(response => {
 	if(response.data.status === '200' || response.data.status === 200) {
 		return Promise.resolve(response.data);
 	} else {
-		console.log('接口返回非200、401的状态，进入失败回调')	
+		console.log('####接口返回非200、401的状态，进入失败回调####')	
 		return Promise.reject(response.data);
 	}
 }, error => {
