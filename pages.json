@@ -1,6 +1,6 @@
 {
     "pages" : [
-        //pages数组中第一项表示应用启动页
+        //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
 		    "path" : "pages/index/index",
 		    "style" : {
@@ -512,13 +512,17 @@
         }
         
     ],
+	//设置默认页面的窗口表现
     "globalStyle" : {
-        "navigationBarTextStyle" : "white",
-        "navigationBarTitleText" : "思程Shop",
-        // "navigationBarTitleText" : "Achasoda",
-        "navigationBarBackgroundColor" : "#0faeff",
-        "backgroundColor" : "#fbf9fe"
+        "navigationBarTextStyle" : "white",//导航栏标题颜色及状态栏前景颜色，仅支持 black/white
+        "navigationBarTitleText" : "思程Shop",//导航栏标题文字内容
+        "navigationBarBackgroundColor" : "#0faeff", //导航栏背景颜色（同状态栏背景色）
+        "backgroundColor" : "#fbf9fe"//窗口的背景色
     },
+	//自动跳转相关配置，新增于HBuilderX 3.5.0
+	"uniIdRouter": {
+		
+	},
     "tabBar" : {
         "color" : "#666",
         "selectedColor" : "#f1224b",
@@ -552,16 +556,5 @@
         ]
     }
 }
-//             {
-//                 "pagePath" : "pages/tabBar/index/index",
-//                 "iconPath" : "static/img/wxbindex.png",
-//                 "selectedIconPath" : "static/img/wxbindex-1.png",
-//                 "text" : "一期"
-//             },
-//             {
-//                 "pagePath" : "pages/tabBar/two/two",
-//                 "iconPath" : "static/img/all.png",
-//                 "selectedIconPath" : "static/img/all-1.png",
-//                 "text" : "二期"
-//             }
+
 

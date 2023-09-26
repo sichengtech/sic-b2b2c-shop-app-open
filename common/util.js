@@ -30,8 +30,6 @@ function formatLocation(longitude, latitude) {
 	}
 }
 
-
-
 var dateUtils = {
 	UNITS: {
 		'年': 31557600000,
@@ -68,9 +66,6 @@ var dateUtils = {
 		return new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
 	}
 };
-
-
-
 
 export default {
 	install(Vue, option) {

@@ -1,10 +1,10 @@
 {
-  "name": "sicheng-shop",
-  "version": "1.0.0",
+  "name": "SiC B2b2cShop App Open",
+  "version": "2.0.0",
   "main": "index.js",
-  "repository": "https://github.com/yang7021/uniApp.git",
-  "author": "guoyang <1097085674@qq.com>",
-  "license": "MIT",
+  "repository": "https://gitee.com/sichengtech_admin/sic-b2b2c-shop-app-open",
+  "author": "zhaolei <elf8848@163.com>",
+  "license": "Mulan PubL v2",
   "dependencies": {
     "m-share": "^1.0.2",
     "nativeshare": "^2.1.3",

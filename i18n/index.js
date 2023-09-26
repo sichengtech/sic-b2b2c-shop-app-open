@@ -25,5 +25,4 @@ const i18n = new VueI18n({
     }, // 设置地区信息
 })
 
-
 export default i18n

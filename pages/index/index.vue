@@ -1,57 +1,40 @@
 <template>
 	<view class="content">
-		
+		<!-- 我是第一首页,我的作用是判断是否进入引导页,或是进入第二首页. -->
 	</view>
 </template>
 
 <script>
 	export default {
 		data() {
-			return {
-			}
+			return { }
 		},
 		onLoad(){
-			if(process.env.NODE_ENV === 'development'){
-				console.log('开发环境')
-// 				let that = this
-// 				uni.switchTab({
-// 					url: that.prefix.uIndex
-// 				})
-			}else{
-				console.log('生产环境')
-				// this.loadExecution()
-			}
-			// this.loadExecution()
-			// return
+			// if(process.env.NODE_ENV === 'development'){
+			// 	console.log('开发环境')
+			// 	// let that = this
+			// 	// uni.switchTab({
+			// 	// 	url: that.prefix.uIndex
+			// 	// })
+			// }else{
+			// 	console.log('生产环境')
+			// 	// this.loadExecution()
+			// }
+
+			// 如果是App
 			// #ifdef APP-PLUS
 			// this.remove()
-			this.loadExecution()
+			this.loadExecution()  //判断是否进入引导页
 			// #endif
 			
+			// 如果不是App
 			// #ifndef APP-PLUS
 			let that = this
 			console.log(that)
 			uni.switchTab({
-				url: that.prefix.uIndex
+				url: that.prefix.uIndex  //直接进入首页
 			})
-			// #endif
-// 			switch(uni.getSystemInfoSync().platform){
-// 				case 'android':
-// 				   console.log('运行Android上')
-// 				   this.loadExecution()
-// 				   break;
-// 				case 'ios':
-// 				   console.log('运行iOS上')
-// 				   this.loadExecution()
-// 				   break;
-// 				default:
-// 				   console.log('运行在开发者工具上')
-// 				   uni.switchTab({
-// 				   	url: that.prefix.startIndex
-// 				   })
-// 				   break;
-// 			}
-			
+			// #endif			
 		},
 		methods: {
 			loadExecution(){
@@ -63,16 +46,18 @@
 				let that = this
 				let launchFlag = this.$storage.getStore('launchFlag')
 				// 判断launchFlag的值是否为true，如果是true进入首页 
-				launchFlag ?
+				if(launchFlag){
+					// 若launchFlag存在，说明不是首次启动，直接进入首页；
 					uni.switchTab({
 						url: that.prefix.uIndex
 					})
-				:
-					// launchFlag的值不为true，进入引导页
+				}else{
+					// 若launchFlag不存在，说明是首次启动，进入引导页；
+					// launchFlag的值不为true，进入App引导页
 					uni.redirectTo({
 						url: that.prefix.uGudie
 					})
-				
+				}					
 			},
 			remove() {
 				this.$storage.reStore('launchFlag')

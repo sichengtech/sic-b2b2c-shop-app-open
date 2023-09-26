@@ -63,6 +63,7 @@
 			}
 		},
 		onLoad() {
+			//请求接口,获取开屏广告信息
 			this.$api.appAdList().then(res => {
 				this.adData = res.data
 			})
@@ -70,13 +71,14 @@
 		methods: {
 			launchFlag(){
 				/**
-				 * 向本地存储中设置launchFlag的值，即启动标识；
+				 * 向本地存储中设置launchFlag的值为true，即启动标识；
 				 */
 				let that = this
 				this.$storage.setStore({
 					key: 'launchFlag',
 					val: true
 				})
+				//进入首页
 				uni.switchTab({
 					url: that.prefix.uIndex
 				});
