@@ -15,7 +15,7 @@ export default {
 
 	// signIn
 	uForgetPwd: "/pages/signIn/forgetPwd/forgetPwd",							// 忘记密码
-	uLogin: "/pages/signIn/login/login",										// 登陆
+	uLogin: "/pages/signIn/login/login",										// 登录
 	uRegister: "/pages/signIn/register/register",								// 注册
 
 	// product

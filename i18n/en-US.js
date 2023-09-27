@@ -29,7 +29,7 @@ export default {
     '账号请输入字母或数字': 'Please enter letters or Numbers for your account number',
 
     // ajax.js
-    '未登陆请登陆': 'Not logged in, please log in',
+    '未登录请登录': 'Not logged in, please log in',
 
     // pay.js
     '支付宝': 'Alipay',
