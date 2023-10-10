@@ -269,7 +269,7 @@ export default {
     '热销': 'Sell well',
 
     // tradeCart.vue
-    '快去浏览商品吧': "Let's go browse the products",
+    '购物车是空的': "The shopping cart is empty",
     '合计': 'Total',
     '去结算': 'Settlement',
     '是否要删除选择的商品': 'Whether to delete the selected commodity',

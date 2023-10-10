@@ -57,8 +57,8 @@ Vue.prototype._i18n = i18n
 //	Vue.component 的第一个参数必须是静态的字符串。
 //	nvue 页面暂不支持全局组件。
 Vue.component('uni-icons', uniIcons)
-Vue.component('fine-icon', fineIcon)
-Vue.component('lazy-img', lazyImage)
+Vue.component('fine-icon', fineIcon) //图标库
+Vue.component('lazy-img', lazyImage) //图片懒加载
 Vue.component('type-top', typeTop)
 Vue.component('uni-badge', uniBadge)
 Vue.component('uni-load-more', uniLoadMore)

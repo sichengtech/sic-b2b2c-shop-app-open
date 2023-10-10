@@ -28,6 +28,7 @@
 					</view>
 				</scroll-view>
 				<scroll-view class="nav-right" scroll-y :scroll-top="scrollTop" @scroll="scroll" :style="'height:'+height+'px'" scroll-with-animation>
+					<!-- 热销品牌 -->
 					<view class="" v-if="hotProductList.length">
 						<view class="nav-top">{{ $t('热销品牌') }}</view>
 						<view class="nav-hot">
@@ -60,8 +61,11 @@
 								<block v-if="categoryActive > 0">
 									<view :id="i === 0 ? 'first' : ''" class="nav-right-item" v-for="(project, i) in item.childrenList" :key="i">
 										<view @tap="toView(project)">
+											<!-- 分类图片 -->
 											<image v-if="project.bak1" :src="url + project.bak1 + imgShrink(75, 75)" />
+											<!-- 无分类图片时显示的默认图片 -->
 											<view v-else class="no_img"></view>
+											<!-- 分类的名称 -->
 											<view class="category-name">{{ project.name }}</view>
 										</view>
 									</view>
@@ -197,6 +201,7 @@ import store from '../../../store/index'
 					})
 				}
 			},
+			//热销品牌、热销分类、其他分类
 			productRxCategoryDetail() {
 				let _this = this
 				// 热销品牌
@@ -348,17 +353,17 @@ import store from '../../../store/index'
 		background: #fff;
 	}
 	.nav-right-item image {
-		width: 100upx;
-		height: 100upx;
-		border-radius: 100%;
+		width: 110upx;
+		height: 110upx;
+		border-radius: 10%;
 		border: #f7f7fa solid 1px;
 	}
 	.nav-right-item .no_img {
-		width: 120upx;
-		height: 124upx;
-		border-radius: 100%;
+		width: 110upx;
+		height: 110upx;
+		border-radius: 10%;
 		border: #f7f7fa solid 1px;
-		background-image: url(../../../static/img/category_icon2.jpg);
+		background-image: url(../../../static/img/default_goods.png);
 		background-size: contain;
 		margin: 0 auto;
 	}

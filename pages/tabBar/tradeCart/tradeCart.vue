@@ -80,8 +80,8 @@
 			</view>
 			
 			<view class="no-msg" v-if="showLoadMore">
-				<fine-icon type="xiaoxi1" size="100"></fine-icon>
-				<view class="">{{ $t('快去浏览商品吧') }}</view>
+				<fine-icon type="cart" size="100" class="cartEmpty"></fine-icon>
+				<view class="cartEmpty">{{ $t('购物车是空的') }}</view>
 			</view>
 		</view>
 		
@@ -90,8 +90,8 @@
 				<checkbox-group class="footer-all">
 					<view class="uni-list-cell-b">
 						<checkbox :checked="comSeleAll" style="display: none;" />
-						<text class="iconfont" :class="comSeleAll ? 'icon-success' : 'icon-success-copy1'"></text>
-						<text>{{ $t('全选') }}</text>
+						<text class="iconfont" :class="comSeleAll ? 'icon-success' : 'icon-success-copy1'" style="font-size:16px;color:#ccc"></text>
+						<text  style="font-size:14px">{{ $t('全选') }}</text>
 					</view>
 				</checkbox-group>
 			</view>
@@ -615,6 +615,9 @@
 		position: relative;
 		font-size: 40upx;
 	} */
+	.cartEmpty{
+		color: #ccc;
+	}
 	
 
 </style>
