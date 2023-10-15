@@ -356,7 +356,7 @@
 						img: require('../../../static/img/cart.png')
 					}, {
 						type: 3,
-						text: '个人中心',
+						text: '我的',
 						img: require('../../../static/img/account.png')
 					}, {
 						type: 4,

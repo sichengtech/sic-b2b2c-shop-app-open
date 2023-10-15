@@ -1,24 +1,13 @@
 <template>
 	<view>
-		<!--  -->
+
 		<!-- 头部 -->
-
-		<!-- #ifndef MP-WEIXIN -->
-		<!-- <nav-bar title="购物车">
-			<block slot="right">
-				<view class="city">
-					<text class="iconfont icon-edit" @click="showDele = true" v-if="!showDele"></text>
-					<text class="iconfont icon-wancheng" @click="showDele = false" v-if="showDele"></text>
-				</view>
-			</block>
-		</nav-bar> -->
-		<!-- #endif -->
-
-		
 		<uni-nav-bar color="#333333" fixed="true" @click-left="back">
+			<!-- #ifndef MP-WEIXIN -->
 			<view class="input-view">
 				<text class="view-text">{{ $t('购物车') }}</text>
 			</view>
+			<!-- #endif -->
 			<block slot="right">
 				<view class="city">
 					<view class="iconfont icon-edit" @click="showDele = true" v-if="!showDele"></view>
@@ -28,7 +17,7 @@
 				</view>
 			</block>
 		</uni-nav-bar>
-		
+
 		<view :style="{ height: barHeight('statusBarHeight') + 'px' }"></view>
 		<view class="list">
 			<view v-if="cartLists">
@@ -37,7 +26,8 @@
 						<label class="uni-list-cell uni-list-cell-b uni-list-cell-pd">
 							<view class="store_wrap">
 								<checkbox :value="key" :checked="shopAllCheck(key)" style="display: none;" />
-								<text class="iconfont" :class="shopAllCheck(key) ? 'icon-success' : 'icon-success-copy1'"></text>
+								<text class="iconfont"
+									:class="shopAllCheck(key) ? 'icon-success' : 'icon-success-copy1'"></text>
 								<text class="store-name">{{ key.split('-')[0] }}</text>
 							</view>
 						</label>
@@ -48,7 +38,8 @@
 								<label class="uni-list-cell uni-list-cell-b uni-list-cell-pd">
 									<view>
 										<checkbox :checked="pro.checked" style="display: none;" />
-										<text class="iconfont" :class="pro.checked ? 'icon-success' : 'icon-success-copy1'"></text>
+										<text class="iconfont"
+											:class="pro.checked ? 'icon-success' : 'icon-success-copy1'"></text>
 									</view>
 								</label>
 							</checkbox-group>
@@ -61,37 +52,41 @@
 									{{ pro.productSpu.pid }}
 									{{ pro.productSpu.name }}
 								</view>
-								<view class="product-purchase" v-if="pro.skuValue && !pro.isOffShelf" @tap="navTo(pro.productSpu.pid)">
+								<view class="product-purchase" v-if="pro.skuValue && !pro.isOffShelf"
+									@tap="navTo(pro.productSpu.pid)">
 									<!-- 规格： -->
 									<text class="">{{ pro.skuValue }}</text>
 								</view>
 								<view class="product-purchase" v-if="!pro.isOffShelf">
-									{{ $t('起购量') }}<text class="purchase-num">{{ pro.productSpu.purchasingAmount || 1 }}</text>
+									{{ $t('起购量') }}<text
+										class="purchase-num">{{ pro.productSpu.purchasingAmount || 1 }}</text>
 								</view>
 								<view class="product-price" v-if="!pro.isOffShelf">
 									<text class="price">{{ '￥' + formatMoney(pro.price)}}</text>
-									<uni-number-box :value="pro.count" :extendData="pro" @change="changeProductNum"></uni-number-box>
+									<uni-number-box :value="pro.count" :extendData="pro"
+										@change="changeProductNum"></uni-number-box>
 								</view>
-								
+
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
-			
+
 			<view class="no-msg" v-if="showLoadMore">
 				<fine-icon type="cart" size="100" class="cartEmpty"></fine-icon>
 				<view class="cartEmpty">{{ $t('购物车是空的') }}</view>
 			</view>
 		</view>
-		
+
 		<view class="bg-fff footer">
 			<view class="footer-flex" @click="selectAll">
 				<checkbox-group class="footer-all">
 					<view class="uni-list-cell-b">
 						<checkbox :checked="comSeleAll" style="display: none;" />
-						<text class="iconfont" :class="comSeleAll ? 'icon-success' : 'icon-success-copy1'" style="font-size:16px;color:#ccc"></text>
-						<text  style="font-size:14px">{{ $t('全选') }}</text>
+						<text class="iconfont" :class="comSeleAll ? 'icon-success' : 'icon-success-copy1'"
+							style="font-size:16px;color:#ccc"></text>
+						<text style="font-size:14px">{{ $t('全选') }}</text>
 					</view>
 				</checkbox-group>
 			</view>
@@ -105,7 +100,7 @@
 				{{ $t('删除') }}
 			</view>
 		</view>
-		
+
 	</view>
 </template>
 
@@ -128,27 +123,27 @@
 		},
 		onShow() {
 			let isLogin = this.$storage.isLogin()
-			if(isLogin) {
+			if (isLogin) {
 				this.init()
 			} else {
 				this.showLoadMore = true
 			}
 		},
-		computed:{
+		computed: {
 			// 所有商品是否全选
 			comSeleAll() {
 				let count = 0,
 					i = 0;
 
-				for(let k in this.cartLists) {
-					if(this.cartLists.hasOwnProperty(k)) {
+				for (let k in this.cartLists) {
+					if (this.cartLists.hasOwnProperty(k)) {
 						this.cartLists[k].forEach(n => {
 							i++;
 							n.checked ? count++ : ''
 						})
 					}
 				}
-				if(i == count && count !== 0) {
+				if (i == count && count !== 0) {
 					return true;
 				} else {
 					return false;
@@ -157,10 +152,10 @@
 			// 总价
 			cartCount() {
 				let price = 0
-				for(let k in this.cartLists) {
-					if(this.cartLists.hasOwnProperty(k)) {
+				for (let k in this.cartLists) {
+					if (this.cartLists.hasOwnProperty(k)) {
 						this.cartLists[k].forEach(n => {
-							if(n.checked) {
+							if (n.checked) {
 								price += (n.price * 100 * n.count)
 							}
 						})
@@ -172,12 +167,12 @@
 			shopAllCheck() {
 				return key => {
 					let count = 0,
-					i = 0;
+						i = 0;
 					this.cartLists[key].forEach(n => {
 						i++;
 						n.checked ? count++ : ''
 					})
-					if(i == count && count !== 0) {
+					if (i == count && count !== 0) {
 						return true;
 					} else {
 						return false;
@@ -197,45 +192,46 @@
 					let cartList = res.data
 					console.log("购物车数据：")
 					console.log(cartList)
-					let arr = Object.assign({}, cartList)  //浅拷贝Object.assign方法只会拷贝源对象可枚举的的自有属性到目标对象
-					if(Object.keys(arr).length === 0) {
+					let arr = Object.assign({}, cartList) //浅拷贝Object.assign方法只会拷贝源对象可枚举的的自有属性到目标对象
+					if (Object.keys(arr).length === 0) {
 						this.showLoadMore = true
-						this.cartLists = {}//向外输出
-						console.log("这个数据很重要444："+this.cartLists)
+						this.cartLists = {} //向外输出
+						console.log("这个数据很重要444：" + this.cartLists)
 						console.log(this.cartLists)
 						return false
 					} else {
-						this.showLoadMore = false	
+						this.showLoadMore = false
 						//对接口返回数据，做一轮加工。
-						for(var k in cartList) {
-							if(cartList.hasOwnProperty(k)) {
+						for (var k in cartList) {
+							if (cartList.hasOwnProperty(k)) {
 								cartList[k].forEach((n, i) => {
-									arr[k][i].checked = false;//初始化复选框
+									arr[k][i].checked = false; //初始化复选框
 									//先设置一个默认图
 									arr[k][i].image = this.prefix.noProductImg
 									// 当商品有图片时，拼接图片全路径赋值给一个新属性image
-									if(arr[k][i].productSpu.image) {
-										arr[k][i].image = this.prefix.baseImgUrl + arr[k][i].productSpu.image + this.imgShrink(100, 100);
+									if (arr[k][i].productSpu.image) {
+										arr[k][i].image = this.prefix.baseImgUrl + arr[k][i].productSpu
+											.image + this.imgShrink(100, 100);
 									}
 								})
 							}
-						}		
-						this.cartLists = arr;//向外输出
-						console.log("这个数据很重要333："+this.cartLists)
+						}
+						this.cartLists = arr; //向外输出
+						console.log("这个数据很重要333：" + this.cartLists)
 						console.log(this.cartLists)
 
-						
+
 						// let	pids = [],
 						// skuIds = [],
 						// storeName = '';
-							
+
 						// for(var k in cartList) {
 						// 	if(cartList.hasOwnProperty(k)) {
 						// 		cartList[k].forEach(n => {
 						// 			pids.push(n.pid)
 						// 			skuIds.push(n.skuId)
 						// 		})
-								
+
 						// 	}
 						// }
 						// console.log("二次查询参数：")
@@ -285,37 +281,37 @@
 					this.openErrMsg(err.message || '加载错误')
 				})
 			},
-			
-			editSele (key, index) {
+
+			editSele(key, index) {
 				// 商品选择
 				this.cartLists[key][index].checked = !this.cartLists[key][index].checked
 				let productCount = 0
 				this.cartLists[key].forEach((n, i) => {
-					if(n.checked) {
+					if (n.checked) {
 						productCount++
 					}
 				})
 
-				if(productCount === this.cartLists[key].length) {
+				if (productCount === this.cartLists[key].length) {
 					this.cartLists[key].checked = true
 				} else {
 					this.cartLists[key].checked = false
 				}
 			},
-			editCart (falg, key, index) {
+			editCart(falg, key, index) {
 				// 店铺全选
 				let data = this.cartLists[key];
 				let isShopAllChecked = this.shopAllCheck(key)
-					data.forEach((n, i) => {
-						data[i].checked = !isShopAllChecked
-					})
+				data.forEach((n, i) => {
+					data[i].checked = !isShopAllChecked
+				})
 				// this.cartLists[index].checked = !this.cartLists[index].checked
 				this.cartLists[key] = data
 			},
-			selectAll () {
+			selectAll() {
 				this.seleAll = !this.seleAll
-				for(let k in this.cartLists) {
-					if(this.cartLists.hasOwnProperty(k)) {
+				for (let k in this.cartLists) {
+					if (this.cartLists.hasOwnProperty(k)) {
 						this.cartLists[k].forEach((n) => {
 							n.checked = this.seleAll
 						})
@@ -323,13 +319,13 @@
 				}
 			},
 			// 删除商品
-			deleSele () {
+			deleSele() {
 				let arr = [];
 				let noDeleteArr = this.cartLists
-				for(let k in this.cartLists) {
-					if(this.cartLists.hasOwnProperty(k)) {
+				for (let k in this.cartLists) {
+					if (this.cartLists.hasOwnProperty(k)) {
 						this.cartLists[k].forEach((n, i) => {
-							if(n.checked) {
+							if (n.checked) {
 								arr.push(n.cartId);
 							}
 						})
@@ -344,19 +340,19 @@
 				})
 			},
 			// 删除弹层
-			deleShow () {
+			deleShow() {
 				let that = this
 				let count = 0;
-				for(let k in this.cartLists) {
-					if(this.cartLists.hasOwnProperty(k)) {
+				for (let k in this.cartLists) {
+					if (this.cartLists.hasOwnProperty(k)) {
 						this.cartLists[k].forEach((n, i) => {
-							if(n.checked) {
+							if (n.checked) {
 								count++
 							}
 						})
 					}
 				}
-				if(!count) {
+				if (!count) {
 					this.openErrMsg(that.$t('还没有选择商品'));
 					return
 				}
@@ -365,7 +361,7 @@
 					content: that.$t('是否要删除选择的商品'),
 					cancelText: that.$t('否'),
 					confirmText: that.$t('是'),
-					success: function (res) {
+					success: function(res) {
 						if (res.confirm) {
 							that.deleSele()
 						} else if (res.cancel) {
@@ -377,10 +373,10 @@
 			// 商品数量改变
 			changeProductNum(data) {
 				let arr = this.cartLists
-				for(let k in arr) {
-					if(arr.hasOwnProperty(k)) {
+				for (let k in arr) {
+					if (arr.hasOwnProperty(k)) {
 						arr[k].forEach((n, i) => {
-							if(n.cartId === data.param.cartId) {
+							if (n.cartId === data.param.cartId) {
 								arr[k][i].count = data.num
 							}
 						})
@@ -400,44 +396,46 @@
 				let that = this;
 				let count = 0;
 				let arr = [];
-				for(let k in this.cartLists) {
-					if(this.cartLists.hasOwnProperty(k)) {
+				for (let k in this.cartLists) {
+					if (this.cartLists.hasOwnProperty(k)) {
 						this.cartLists[k].forEach((n, i) => {
-							if(n.checked) {
+							if (n.checked) {
 								count++;
 							}
 						})
 					}
 				}
 
-				if(!count) {
+				if (!count) {
 					this.openErrMsg(that.$t('请选择要购买的商品'));
 					return;
 				}
 
-				for(let k in this.cartLists) {
-					if(this.cartLists.hasOwnProperty(k)) {
-						for(let i = 0; i < this.cartLists[k].length; i++) {
+				for (let k in this.cartLists) {
+					if (this.cartLists.hasOwnProperty(k)) {
+						for (let i = 0; i < this.cartLists[k].length; i++) {
 							let item = this.cartLists[k][i];
-							if(item.checked) {
-								if(item.isOffShelf) {
+							if (item.checked) {
+								if (item.isOffShelf) {
 									this.openErrMsg(that.$t('不能购买无效的商品'));
 									return;
-								} else if(item.productSku.stock < item.count) {
+								} else if (item.productSku.stock < item.count) {
 									this.openErrMsg(item.productSpu.name + that.$t('库存不足'));
 									return;
-								} else if(item.productSpu.purchasingAmount > this.cartLists[k].reduce((count, item) => { 
-									// purchasingAmount; 是 起购量
-									// 同店铺同ID的商品总计数量
-									if(item.productSpu.pid === item.productSpu.pid && item.checked) {
-										return count += item.count
-									} else {
-										return count
-									}
-								}, 0)) {
-									this.openErrMsg(that.$t('购买数量必须大于起购量,该商品的起购量是X', {num: item.productSpu.purchasingAmount}), 5000);
+								} else if (item.productSpu.purchasingAmount > this.cartLists[k].reduce((count, item) => {
+										// purchasingAmount; 是 起购量
+										// 同店铺同ID的商品总计数量
+										if (item.productSpu.pid === item.productSpu.pid && item.checked) {
+											return count += item.count
+										} else {
+											return count
+										}
+									}, 0)) {
+									this.openErrMsg(that.$t('购买数量必须大于起购量,该商品的起购量是X', {
+										num: item.productSpu.purchasingAmount
+									}), 5000);
 									return;
-								}else {
+								} else {
 									arr.push(this.cartLists[k][i].cartId);
 								}
 							}
@@ -446,7 +444,8 @@
 				}
 
 				uni.navigateTo({
-					url: this.prefix.uOrderOk + '?stat=1&type=1&ids='+ arr.join() +'&productSumPrice=' + this.cartCount   
+					url: this.prefix.uOrderOk + '?stat=1&type=1&ids=' + arr.join() + '&productSumPrice=' + this
+						.cartCount
 					//this.cartCount 是商品总价
 				})
 
@@ -470,30 +469,38 @@
 	.city {
 		margin-left: 0px;
 	}
+
 	.city .icon-wancheng {
 		font-size: 36upx;
 	}
+
 	.store-name {
 		font-weight: 400;
 		font-size: 32upx;
 	}
+
 	.store_wrap {
 		display: flex;
 		align-items: center;
 	}
+
 	.list {
 		padding-bottom: 170upx;
 	}
+
 	.uni-list .uni-list-cell-b:after {
 		height: 1upx;
 		left: 0;
 	}
+
 	.uni-list .uni-list-cell .uni-list-cell-b:after {
 		height: 0upx;
 	}
+
 	.list-flex {
 		position: relative;
 	}
+
 	.list-flex .flex-off {
 		position: absolute;
 		top: 25%;
@@ -509,24 +516,30 @@
 		align-items: center;
 		justify-content: center;
 	}
+
 	.list-flex:first-child {
 		flex: 1;
 	}
+
 	.list-flex:nth-child(2) {
 		width: 200upx;
 	}
+
 	.list-flex:last-child {
 		flex: 8;
 		padding-left: 20upx;
 	}
+
 	.list-flex .uni-list-cell-pd {
 		padding: 0;
 		height: 100%;
 	}
+
 	.flex-img {
 		width: 200upx;
 		height: 200upx;
 	}
+
 	.product-tit {
 		height: 76upx;
 		font-size: 28upx;
@@ -539,10 +552,12 @@
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
 	}
+
 	.product-purchase {
 		font-size: 20upx;
 		color: #949494;
 	}
+
 	/* .purchase-num {
 		color: red;
 	} */
@@ -550,12 +565,13 @@
 		color: red;
 		font-size: 36upx;
 	}
+
 	.product-price {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 	}
-	
+
 	.footer {
 		display: flex;
 		display: -webkit-flex;
@@ -570,32 +586,40 @@
 		border-top: 2upx solid #ccc;
 		z-index: 100;
 	}
+
 	.footer-flex {
 		flex: 5;
 		line-height: 80upx;
 	}
+
 	.footer-flex:first-child {
 		flex: 2;
 	}
+
 	.footer-all .uni-list-cell-b {
 		height: 100%;
 		padding-left: 20upx;
 		line-height: 80upx;
 	}
+
 	.total {
 		padding: 0 30upx;
 		text-align: right;
 	}
+
 	.total .total-text {
 		color: red;
 		font-size: 32upx;
 	}
+
 	.bg-fff {
 		background: #fff;
 	}
+
 	.mui-left {
 		margin-left: 20upx;
 	}
+
 	.account {
 		text-align: center;
 		color: #fff;
@@ -603,6 +627,7 @@
 		font-size: 32upx;
 		flex: 2;
 	}
+
 	/* .raido-view {
 		padding-top: 10upx;
 	}
@@ -615,9 +640,7 @@
 		position: relative;
 		font-size: 40upx;
 	} */
-	.cartEmpty{
+	.cartEmpty {
 		color: #ccc;
 	}
-	
-
 </style>

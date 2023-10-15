@@ -1,6 +1,5 @@
 <template>
 	<view style="overflow: hidden;">
-		<!--  -->
 		<!-- 头部 -->
 		<uni-nav-bar color="#333333" fixed="true" right-icon="home" @click-left="back"
 			@click-right="backIndex">
@@ -64,7 +63,7 @@
 											<!-- 分类图片 -->
 											<image v-if="project.bak1" :src="url + project.bak1 + imgShrink(75, 75)" />
 											<!-- 无分类图片时显示的默认图片 -->
-											<view v-else class="no_img"></view>
+											<view v-else class="no_img" ></view>
 											<!-- 分类的名称 -->
 											<view class="category-name">{{ project.name }}</view>
 										</view>
@@ -363,7 +362,7 @@ import store from '../../../store/index'
 		height: 110upx;
 		border-radius: 10%;
 		border: #f7f7fa solid 1px;
-		background-image: url(../../../static/img/default_goods.png);
+		background-image: url(../../../static/img/default_goods.png); 
 		background-size: contain;
 		margin: 0 auto;
 	}

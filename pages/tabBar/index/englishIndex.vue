@@ -377,7 +377,7 @@
 			},
 			init() {
 				let that = this
-				let arr = ['首页', '分类', '购物车', '个人中心']
+				let arr = ['首页', '分类', '购物车', '我的']
 				arr.forEach((n, i) => {
 					uni.setTabBarItem({
 						index: i,

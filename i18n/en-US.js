@@ -199,7 +199,7 @@ export default {
     '加入购物车': 'Add to Cart',
     '立即购买': 'Buy now',
     '首页': 'Home',
-    '个人中心': 'My',
+    '我的': 'My',
     '消息': 'Message',
     '商品': 'Commodity',
     '咨询': 'Consult',
