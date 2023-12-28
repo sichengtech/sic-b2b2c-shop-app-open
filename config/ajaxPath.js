@@ -66,7 +66,7 @@ export default {
 	uploaderWebUploadServer: '/upload/upload/webUploadServer.htm',	// 上传地址，用于接收上传的服务端
 
 	//用户相关接口
-	userList: '/wap/api/v1/user/list.htm', 								// 查询用户列表（商品评价页）
+	userList: '/wap/api/v1/user/list.htm', 								// 查询用户列表（商品评价页） 根据多个用户id获取用户名（只返回了uid、loginName两个字段）
 	userOne: '/wap/api/v1/user/one.htm', 								// 查询一个用户（会员中心）
 	userMember: '/wap/api/v1/user/member.htm',							// 用户头像（用户信息页）
 	userCentralCount: '/wap/api/v1/user/userCentral/count.htm', 		// 用户模块信息数量
