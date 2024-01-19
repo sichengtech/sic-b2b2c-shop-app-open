@@ -38,7 +38,8 @@
 							>
 								<view @tap="toView(item)">
 									<view class="hot-img">
-										<lazy-img :realSrc="(url + item.path)"></lazy-img>
+										<!-- <lazy-img :realSrc="(url + item.path)"></lazy-img> -->
+										<image :src="url + item.path" />
 									</view>
 								</view>
 							</view>

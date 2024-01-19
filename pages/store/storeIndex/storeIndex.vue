@@ -108,7 +108,7 @@
 			<!--店铺信息-->
 			<view class="product-item store-msg bg-fff">
 				<view class="store-img">
-					<view class="store-img-view"><image v-if="storeLogo + imgShrink(150, 75)" class="view-img" :src="prefix.baseImgUrl + storeLogo" /></view>
+					<view class="store-img-view"><image v-if="storeLogo" class="view-img" :src="prefix.baseImgUrl + storeLogo" /></view>
 				</view>
 				<view class="store-name">
 					<view class="name">{{ storeName }}</view>

@@ -12,8 +12,8 @@ export const basePath = {
 	h5Path: '/h5/index.html',   // h5首页的路径
 	
 	// 演示环境
-	baseUrl: 'https://demo1.sicheng.net',
-	baseImgUrl: 'https://demo1.sicheng.net/upload/filestorage', 
+	baseUrl: 'https://demo1.sicheng.net', //访问接口时都需要它
+	baseImgUrl: 'https://demo1.sicheng.net/upload/filestorage',  //图片URL的前缀，访问图片时都需要它
 
 	// // 测试环境
 	// baseUrl: 'http://192.168.92.44',

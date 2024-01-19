@@ -55,9 +55,14 @@ export default {
         init() {
             // 商品详情信息
             this.$api.productDetail({pid: this.ppid}).then(res => {
-                let data = res.data.introduction.replace(/src="\/upload\/filestorage\//g, `src="${ this.prefix.baseImgUrl }/`).replace(/<img /g, '<img ')
-                data = res.data.introduction.replace(/<p><img/g, '<p style="line-height: 0;"><img')
-				// let data = res.data.introduction
+				//对商品详情的html片段，做一些必要的字符串替换
+				let urlPrefix = `src="${ this.prefix.baseImgUrl }/`  //图片URL的前缀
+				let data = res.data.introduction
+				// console.log("图片URL的前缀",urlPrefix)
+				// console.log("商品详情-替换前",data)
+				data = data.replace(/src="\/upload\/filestorage\//g, urlPrefix)
+                data = data.replace(/<p><img/g, '<p style="line-height: 0;"><img')
+				// console.log("商品详情-替换后",data)
                 this.productDetail = '<div>' + data + '</div>'
             }).catch(err => {
                 this.openErrMsg(err.message || '加载错误')
