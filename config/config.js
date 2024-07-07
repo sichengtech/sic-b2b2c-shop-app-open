@@ -11,25 +11,25 @@ import pagePath from './pagePath'
 export const basePath = {
 	h5Path: '/h5/index.html',   // h5首页的路径
 	
-	// 演示环境
-	baseUrl: 'https://demo1.sicheng.net', //访问接口时都需要它
-	baseImgUrl: 'https://demo1.sicheng.net/upload/filestorage',  //图片URL的前缀，访问图片时都需要它
+	// // 演示环境
+	// baseUrl: 'https://demo1.sicheng.net', //访问接口时都需要它
+	// baseImgUrl: 'https://demo1.sicheng.net/upload/filestorage',  //图片URL的前缀，访问图片时都需要它
 
 	// // 测试环境
-	// baseUrl: 'http://192.168.92.44',
-	// baseImgUrl: 'http://192.168.92.44/upload/filestorage',
+	// baseUrl: 'http://192.168.92.44',//访问接口时都需要它
+	// baseImgUrl: 'http://192.168.92.44/upload/filestorage', //图片URL的前缀，访问图片时都需要它
 	
-	// // 开发环境
-	// baseUrl: 'http://127.0.0.1:8081',
-	// baseImgUrl: 'http://127.0.0.1:8081/upload/filestorage',
+	// 开发环境
+	baseUrl: 'http://127.0.0.1:8081',//访问接口时都需要它
+	baseImgUrl: 'http://127.0.0.1:8081/upload/filestorage', //图片URL的前缀，访问图片时都需要它
 	
 	// // 开发环境2
-	// baseUrl: 'http://192.168.9.183:8080',
-	// baseImgUrl: 'http://192.168.9.183:8080/upload/filestorage',
+	// baseUrl: 'http://192.168.9.183:8080',//访问接口时都需要它
+	// baseImgUrl: 'http://192.168.9.183:8080/upload/filestorage', //图片URL的前缀，访问图片时都需要它
 
 	// 英文环境
-	// baseUrl: 'http://k.sicheng.net',
-	// baseImgUrl: 'http://k.sicheng.net/upload/filestorage',
+	// baseUrl: 'http://k.sicheng.net',//访问接口时都需要它
+	// baseImgUrl: 'http://k.sicheng.net/upload/filestorage', //图片URL的前缀，访问图片时都需要它
 }
 
 /**
